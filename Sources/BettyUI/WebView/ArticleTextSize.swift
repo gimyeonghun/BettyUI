@@ -7,16 +7,16 @@
 
 import Foundation
 
-enum ArticleTextSize: Int, CaseIterable, Identifiable {
+public enum ArticleTextSize: Int, CaseIterable, Identifiable {
     case small = 1
     case medium = 2
     case large = 3
     case xlarge = 4
     case xxlarge = 5
     
-    var id: String { description() }
+    public var id: String { description() }
     
-    var cssClass: String {
+    public var cssClass: String {
         switch self {
         case .small:
             return "smallText"

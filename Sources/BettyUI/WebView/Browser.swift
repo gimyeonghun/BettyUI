@@ -9,7 +9,7 @@
 import AppKit
 import WebKit
 
-@MainActor struct Browser {
+@MainActor public struct Browser {
     /// The user-specified default browser for opening web pages.
     ///
     /// The user-assigned default browser, or `nil` if none was assigned

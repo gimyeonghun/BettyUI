@@ -14,12 +14,12 @@ import UIKit
 import WebKit
 
 #if os(macOS)
-struct WebView: NSViewRepresentable {
+public struct WebView: NSViewRepresentable {
     @Binding var htmlString: String
     var baseURL: URL?
     let defaultBundleID: String?
     
-    func makeNSView(context: Context) -> WKWebView {
+    public func makeNSView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
         let baseURL = ArticleRenderer.page.baseURL
@@ -40,16 +40,16 @@ struct WebView: NSViewRepresentable {
         return view
     }
     
-    func updateNSView(_ nsView: WKWebView, context: Context) {
+    public func updateNSView(_ nsView: WKWebView, context: Context) {
         nsView.navigationDelegate = context.coordinator
         nsView.loadHTMLString(htmlString, baseURL: baseURL)
     }
     
-    func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> Coordinator {
         Coordinator(self, bundleID: defaultBundleID)
     }
     
-    class Coordinator: NSObject, WKNavigationDelegate {
+    public class Coordinator: NSObject, WKNavigationDelegate {
         var parent: WebView!
         let defaultBundleID: String?
         
@@ -58,7 +58,7 @@ struct WebView: NSViewRepresentable {
             self.defaultBundleID = bundleID
         }
         
-        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
             if navigationAction.navigationType == .linkActivated {
                 if let url = navigationAction.request.url {
                     Task { @MainActor in Browser.open(url.absoluteString, defaultBundleID: defaultBundleID) }
