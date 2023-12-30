@@ -15,9 +15,9 @@ import WebKit
 
 #if os(macOS)
 public struct WebView: NSViewRepresentable {
-    @Binding var htmlString: String
-    var baseURL: URL?
-    let defaultBundleID: String?
+    @Binding public  var htmlString: String
+    public var baseURL: URL?
+    public let defaultBundleID: String?
     
     public func makeNSView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
