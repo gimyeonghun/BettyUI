@@ -1,0 +1,73 @@
+//
+//  File.swift
+//  
+//
+//  Created by Brian Kim on 31/12/2023.
+//
+
+import SwiftUI
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
+import WebKit
+
+#if os(macOS)
+struct WebView: NSViewRepresentable {
+    @Binding var htmlString: String
+    var baseURL: URL?
+    let defaultBundleID: String?
+    
+    func makeNSView(context: Context) -> WKWebView {
+        let configuration = WKWebViewConfiguration()
+        let userContentController = WKUserContentController()
+        let baseURL = ArticleRenderer.page.baseURL
+        let appScriptsWorld = WKContentWorld.world(name: "Hypermnesia")
+        for fileName in ["main.js", "main_mac.js", "newsfoot.js"] {
+            userContentController.addUserScript(
+                .init(source: try! String(contentsOf: baseURL.appending(path: fileName,
+                                                                        directoryHint: .notDirectory)),
+                      injectionTime: .atDocumentStart,
+                      forMainFrameOnly: true,
+                      in: appScriptsWorld))
+        }
+        
+        configuration.userContentController = userContentController
+        
+        let view = WKWebView(frame: NSRect.zero, configuration: configuration)
+        view.loadHTMLString(htmlString, baseURL: baseURL)
+        return view
+    }
+    
+    func updateNSView(_ nsView: WKWebView, context: Context) {
+        nsView.navigationDelegate = context.coordinator
+        nsView.loadHTMLString(htmlString, baseURL: baseURL)
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self, bundleID: defaultBundleID)
+    }
+    
+    class Coordinator: NSObject, WKNavigationDelegate {
+        var parent: WebView!
+        let defaultBundleID: String?
+        
+        init(_ parent: WebView!, bundleID: String?) {
+            self.parent = parent
+            self.defaultBundleID = bundleID
+        }
+        
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            if navigationAction.navigationType == .linkActivated {
+                if let url = navigationAction.request.url {
+                    Task { @MainActor in Browser.open(url.absoluteString, defaultBundleID: defaultBundleID) }
+                }
+                decisionHandler(.cancel)
+                return
+            }
+            decisionHandler(.allow)
+        }
+    }
+}
+#endif
