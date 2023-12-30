@@ -50,10 +50,10 @@ public struct WebView: NSViewRepresentable {
     }
     
     public class Coordinator: NSObject, WKNavigationDelegate {
-        var parent: WebView!
-        let defaultBundleID: String?
+        public var parent: WebView!
+        public let defaultBundleID: String?
         
-        init(_ parent: WebView!, bundleID: String?) {
+        public init(_ parent: WebView!, bundleID: String?) {
             self.parent = parent
             self.defaultBundleID = bundleID
         }
