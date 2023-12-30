@@ -10,7 +10,7 @@ import Foundation
 import AppKit
 
 public struct ArticleRenderer {
-    typealias Rendering = (style: String, html: String, title: String, baseURL: String)
+    public typealias Rendering = (style: String, html: String, title: String, baseURL: String)
     
     // MARK: Page
     
