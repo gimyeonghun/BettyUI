@@ -19,6 +19,12 @@ public struct WebView: NSViewRepresentable {
     public var baseURL: URL?
     public let defaultBundleID: String?
     
+    public init(htmlString: Binding<String>, baseURL: URL? = nil, defaultBundleID: String?) {
+        _htmlString = htmlString
+        self.baseURL = baseURL
+        self.defaultBundleID = defaultBundleID
+    }
+    
     public func makeNSView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         let userContentController = WKUserContentController()
