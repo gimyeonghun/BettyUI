@@ -142,130 +142,130 @@ public struct ArticleRenderer {
 //    }
 //}
 
-private extension ArticleRenderer {
-    private var articleHTML: String {
-        return try! MacroProcessor.renderedText(withTemplate: template(), substitutions: articleSubstitutions())
-    }
-    
-    private var noSelectionHTML: String {
-        let body = "<h3 class='systemMessage'>No Selection</h3>"
-        return body
-    }
-    
-    private var articleCSS: String {
-        return try! MacroProcessor.renderedText(withTemplate: styleString(), substitutions: styleSubstitutions())
-    }
-    
-    func styleString() -> String {
-        return ArticleRenderer.defaultStyleSheet
-    }
-
-    func template() -> String {
-        return ArticleRenderer.defaultTemplate
-    }
-    
-    func articleSubstitutions() -> [String: String] {
-        var d = [String: String]()
-        
-//        guard let article = article else {
-//            assertionFailure("Article should have been set before calling this function.")
-//            return d
-//        }
-//        
-//        d["title"] = title
-//        
-//        d["preferred_link"] = article.preferredLink ?? ""
-//        
-//        if let externalLink = article.externalLink, externalLink != article.preferredLink {
-//            d["external_link_label"] = NSLocalizedString("label.text.link", comment: "Link: ")
-//            d["external_link_stripped"] = externalLink.strippingHTTPOrHTTPSScheme
-//            d["external_link"] = externalLink
-//        } else {
-//            d["external_link_label"] = ""
-//            d["external_link_stripped"] = ""
-//            d["external_link"] = ""
-//        }
-//        
-//        d["body"] = body
-//        
-//        var components = URLComponents()
-//        components.scheme = Self.imageIconScheme
-//        components.path = article.articleID
-//        if let imageIconURLString = components.string {
-//            d["avatar_src"] = imageIconURLString
-//        }
-//        else {
-//            d["avatar_src"] = ""
-//        }
-//        
-//        if self.title.isEmpty {
-//            d["dateline_style"] = "articleDatelineTitle"
-//        } else {
-//            d["dateline_style"] = "articleDateline"
-//        }
-//        
-//        d["feed_link_title"] = article.feed?.name ?? ""
-//        d["feed_link"] = article.feed?.homePageUrl ?? ""
-//        
-////        d["byline"] = byline()
-//        
-//        let datePublished = article.logicalDatePublished
-//        d["datetime_long"] = Self.longDateTimeFormatter.string(from: datePublished)
-//        d["datetime_medium"] = Self.mediumDateTimeFormatter.string(from: datePublished)
-//        d["datetime_short"] = Self.shortDateTimeFormatter.string(from: datePublished)
-//        d["date_long"] = Self.longDateFormatter.string(from: datePublished)
-//        d["date_medium"] = Self.mediumDateFormatter.string(from: datePublished)
-//        d["date_short"] = Self.shortDateFormatter.string(from: datePublished)
-//        d["time_long"] = Self.longTimeFormatter.string(from: datePublished)
-//        d["time_medium"] = Self.mediumTimeFormatter.string(from: datePublished)
-//        d["time_short"] = Self.shortTimeFormatter.string(from: datePublished)
-//        
-        return d
-    }
-    
-//    func byline() -> String {
-//        guard let authors = article?.authors, !authors.isEmpty else {
-//            return ""
-//        }
-//        
-//        // If the author's name is the same as the feed, then we don't want to display it.
-//        // This code assumes that multiple authors would never match the feed name so that
-//        // if there feed owner has an article co-author all authors are given the byline.
-//        if authors.count == 1, let author = authors.first {
-//            if author.name == article?.feed?.name {
-//                return ""
-//            }
-//        }
-//        
-//        var byline = ""
-//        var isFirstAuthor = true
-//        
-//        for author in authors {
-//            if !isFirstAuthor {
-//                byline += ", "
-//            }
-//            isFirstAuthor = false
-//            if !author.name.isEmpty {
-//                byline += author.name
-//            }
-//        }
-//        
-//        return byline
+//private extension ArticleRenderer {
+//    private var articleHTML: String {
+//        return try! MacroProcessor.renderedText(withTemplate: template(), substitutions: articleSubstitutions())
 //    }
-    
-    #if os(iOS)
-    func styleSubstitutions() -> [String: String] {
-        var d = [String: String]()
-        let bodyFont = UIFont.preferredFont(forTextStyle: .body)
-        d["font-size"] = String(describing: bodyFont.pointSize)
-        return d
-    }
-    #else
-    func styleSubstitutions() -> [String: String] {
-        return [String: String]()
-    }
-    #endif
-}
+//    
+//    private var noSelectionHTML: String {
+//        let body = "<h3 class='systemMessage'>No Selection</h3>"
+//        return body
+//    }
+//    
+//    private var articleCSS: String {
+//        return try! MacroProcessor.renderedText(withTemplate: styleString(), substitutions: styleSubstitutions())
+//    }
+//    
+//    func styleString() -> String {
+//        return ArticleRenderer.defaultStyleSheet
+//    }
+//
+//    func template() -> String {
+//        return ArticleRenderer.defaultTemplate
+//    }
+//    
+//    func articleSubstitutions() -> [String: String] {
+//        var d = [String: String]()
+//        
+////        guard let article = article else {
+////            assertionFailure("Article should have been set before calling this function.")
+////            return d
+////        }
+////        
+////        d["title"] = title
+////        
+////        d["preferred_link"] = article.preferredLink ?? ""
+////        
+////        if let externalLink = article.externalLink, externalLink != article.preferredLink {
+////            d["external_link_label"] = NSLocalizedString("label.text.link", comment: "Link: ")
+////            d["external_link_stripped"] = externalLink.strippingHTTPOrHTTPSScheme
+////            d["external_link"] = externalLink
+////        } else {
+////            d["external_link_label"] = ""
+////            d["external_link_stripped"] = ""
+////            d["external_link"] = ""
+////        }
+////        
+////        d["body"] = body
+////        
+////        var components = URLComponents()
+////        components.scheme = Self.imageIconScheme
+////        components.path = article.articleID
+////        if let imageIconURLString = components.string {
+////            d["avatar_src"] = imageIconURLString
+////        }
+////        else {
+////            d["avatar_src"] = ""
+////        }
+////        
+////        if self.title.isEmpty {
+////            d["dateline_style"] = "articleDatelineTitle"
+////        } else {
+////            d["dateline_style"] = "articleDateline"
+////        }
+////        
+////        d["feed_link_title"] = article.feed?.name ?? ""
+////        d["feed_link"] = article.feed?.homePageUrl ?? ""
+////        
+//////        d["byline"] = byline()
+////        
+////        let datePublished = article.logicalDatePublished
+////        d["datetime_long"] = Self.longDateTimeFormatter.string(from: datePublished)
+////        d["datetime_medium"] = Self.mediumDateTimeFormatter.string(from: datePublished)
+////        d["datetime_short"] = Self.shortDateTimeFormatter.string(from: datePublished)
+////        d["date_long"] = Self.longDateFormatter.string(from: datePublished)
+////        d["date_medium"] = Self.mediumDateFormatter.string(from: datePublished)
+////        d["date_short"] = Self.shortDateFormatter.string(from: datePublished)
+////        d["time_long"] = Self.longTimeFormatter.string(from: datePublished)
+////        d["time_medium"] = Self.mediumTimeFormatter.string(from: datePublished)
+////        d["time_short"] = Self.shortTimeFormatter.string(from: datePublished)
+////        
+//        return d
+//    }
+//    
+////    func byline() -> String {
+////        guard let authors = article?.authors, !authors.isEmpty else {
+////            return ""
+////        }
+////        
+////        // If the author's name is the same as the feed, then we don't want to display it.
+////        // This code assumes that multiple authors would never match the feed name so that
+////        // if there feed owner has an article co-author all authors are given the byline.
+////        if authors.count == 1, let author = authors.first {
+////            if author.name == article?.feed?.name {
+////                return ""
+////            }
+////        }
+////        
+////        var byline = ""
+////        var isFirstAuthor = true
+////        
+////        for author in authors {
+////            if !isFirstAuthor {
+////                byline += ", "
+////            }
+////            isFirstAuthor = false
+////            if !author.name.isEmpty {
+////                byline += author.name
+////            }
+////        }
+////        
+////        return byline
+////    }
+//    
+//    #if os(iOS)
+//    func styleSubstitutions() -> [String: String] {
+//        var d = [String: String]()
+//        let bodyFont = UIFont.preferredFont(forTextStyle: .body)
+//        d["font-size"] = String(describing: bodyFont.pointSize)
+//        return d
+//    }
+//    #else
+//    func styleSubstitutions() -> [String: String] {
+//        return [String: String]()
+//    }
+//    #endif
+//}
 
 // MARK: - Article extension
 

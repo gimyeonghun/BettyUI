@@ -1,0 +1,305 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.invisible {
+    display: none;
+}
+
+@media screen {
+    margin: 0;
+    padding: 0;
+
+    #article {
+        pointer-events: : auto;
+        overflow: visible;
+    }
+}
+
+@media screen and (min-width: 0px) {
+    .page, .article-info {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+@media screen and (min-width: 375px) {
+    .page, .article-info {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+@media screen and (min-width: 414px) {
+    .page, .article-info {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media screen and (min-width: 667px) {
+    /* iPhone 6 in landscape */
+    .page, .article-info  { padding-left: 40px; padding-right: 40px; }
+}
+
+@media screen and (max-width: 569px) {
+    h1.title {
+        font-size: 1.3em;
+    }
+    h1 {
+        font-size: 1.22em;
+    }
+    h2 {
+        font-size: 1.15em;
+    }
+    h3 {
+        font-size: 1.0em;
+    }
+    blockquote, q {
+        padding-left: 12px;
+    }
+}
+
+@media screen and (min-width: 704px) {
+    /* iPad in landscape with the sidebar open */
+    .page, .article-info { padding-left: 42px; padding-right: 42px; }
+}
+
+@media screen and (min-width: 736px) {
+    /* iPhone 6 Plus in landscape */
+    .page, .article-info { padding-left: 60px; padding-right: 60px; }
+}
+
+
+@media only screen and (min-width: 780px) {
+    .page, .article-info {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+}
+
+h1 {
+    line-height: 1.4em;
+    font-size: 1.95552em;
+    line-height: 1.2141em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+h2 {
+    font-size: 1.43em;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+h4, h5, h6 {
+    font-size: 1em;
+    margin: 1em 0;
+}
+
+hr {
+    background: rgba(0, 0, 0, 0.2);
+    height: 1px;
+    border: 0;
+}
+
+pre {
+    font-family: -apple-system-ui-monospaced, Menlo;
+    font-size: 0.87em;
+    line-height: 1.45em;
+}
+
+blockquote, q {
+    color: rgba(0, 0, 0, 0.65);
+    margin-left: 2px;
+    margin-right: 6px;
+    padding-left: 16px;
+    border-left: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+iframe {
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+#article a:hover {
+    text-decoration: underline;
+}
+
+a[href] {
+    color: rgb(65, 110, 210);
+}
+
+.system { font-family: -apple-system-font; }
+
+#article {
+    text-rendering: optimizeLegibility;
+    line-height: 1.4286em;
+    font-size: 1.1em;
+}
+
+#article * {
+    /* Scale down anything larger than our view. Max-width maintains aspect ratios on images. */
+    max-width: 100%;
+}
+
+#article figcaption {
+    margin-top: 4px;
+}
+
+#article img {
+    /* By default, images are centered on their own line. */
+    margin: 0.5em auto;
+    display: block;
+    height: auto;
+}
+
+#article figure img {
+    margin-bottom: 0;
+}
+
+#article figcaption > * {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
+#article :matches(.leading-image, figure) p {
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
+}
+
+.page {
+    min-height: 100%;
+    margin: 22px auto 0 auto;
+}
+
+@media screen and (max-height: 700px) {
+    .page {
+        padding-bottom: 32px;
+    }
+}
+
+.article-info-container {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #d0d7de;
+    box-shadow: inset 0 -1px 0 var(hsla(210,18%,87%,1) var(hsla(210,18%,87%,1)));
+    overflow-y: hidden;
+}
+
+.article-info {
+    margin-bottom: 16px;
+}
+
+.article-info .title {
+    margin-top: 16px;
+    margin-bottom: 4px;
+}
+
+.article-info .title a {
+    color: #000;
+}
+
+.article-info .title a:hover {
+    text-decoration: underline;
+}
+
+.article-info .date-published {
+    font-size: 0.9em;
+    line-height: 1.6em;
+}
+
+.article-info .authors {
+    padding-top: 4px;
+}
+
+.article-info .authors a {
+    font-weight: bold;
+    color: #999;
+}
+
+.article-info .authors a:hover {
+    text-decoration: underline;
+    color: rgb(65, 110, 210);
+}
+
+.sticky-header {
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1;
+      position: fixed;
+      box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      animation: slideDown 0.35s ease-out;
+}
+
+.sticky-info {
+    margin-bottom: 10px;
+}
+
+.sticky-header .title {
+    font-size: 1.2222em;
+    margin-top: 8px;
+      white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sticky-header .authors {
+    font-size: 0.8em;
+    padding-top: 0px;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+
+pre {
+    color: #282828;
+    word-break: normal;
+    word-wrap: normal;
+    white-space: pre-wrap;
+    display: block;
+    overflow: auto;
+    padding: .5em;
+    border-radius: 3px;
+}
+
+pre {
+    line-height: 1.4286em;
+}
+
+code, pre {
+    font-family: "SF Mono", Menlo, Courier, monospace;
+    font-size: 1em;
+    -webkit-hyphens: none;
+    background: #f7f7f7;
+}
+
+code {
+    padding: 1px 2px;
+    border-radius: 2px;
+}
+
+pre code {
+    letter-spacing: -.027em;
+    font-size: 0.9375em;
+}
+

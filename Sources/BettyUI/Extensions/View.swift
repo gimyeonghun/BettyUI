@@ -16,11 +16,11 @@ extension View {
 }
 
 extension EnvironmentValues {
-    struct StyleKey: EnvironmentKey {
-        static var defaultValue: any ThemeStyle = Theme.plain
+    public struct StyleKey: EnvironmentKey {
+        public static var defaultValue: any ThemeStyle = Theme.plain
     }
     
-    var themeStyle: any ThemeStyle {
+    public var themeStyle: any ThemeStyle {
         get { self[StyleKey.self] }
         set { self[StyleKey.self] = newValue }
     }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>[[title]]</title>
+    <style>
+        [[style]]
+    </style>
+</head>
+<body class="mac locale-en sepia system">
+    <div class="article-info-container">
+        <div class="article-info">
+            <h1 class="title">
+                <bdi>[[title]]</bdi>
+            </h1>
+            <div class="date-published">[[pubDate]]</div>
+            [[authors]]
+        </div>
+    </div>
+    <div class="article-info-container sticky-header invisible">
+        <div class="sticky-info article-info">
+            <h1 class="title">
+                <bdi><a href="https://othe.red/">[[title]]</a></bdi>
+            </h1>
+            [[authors]]
+        </div>
+    </div>
+    <div class="page">
+        <div id="article">
+            [[body]]
+        </div>
+    </div>
+<script>
+  const header = document.querySelector(".sticky-header");
+  const toggleClass = "invisible";
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
+    if (currentScroll > 150) {
+        header.classList.remove(toggleClass);
+    } else {
+        header.classList.add(toggleClass);
+    }
+  });
+</script>
+</body>
+</html>
