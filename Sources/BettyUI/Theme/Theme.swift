@@ -82,7 +82,7 @@ public struct Theme: ThemeStyle {
     
     public static var system: Theme {
         #if os(macOS)
-        let selection = UXColor.controlAccentColor.usingColorSpace(.sRGB)!
+        let selection = UXColor.controlAccentColor.usingColorSpace(.deviceRGB)!
         #else
         let selection = UXColor.tintColor
         #endif
