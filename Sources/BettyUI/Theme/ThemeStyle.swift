@@ -7,21 +7,18 @@
 
 import SwiftUI
 
-public protocol ThemeStyle: DynamicProperty {
-    var foreground: Color { get }
-    var foregroundLight: Color { get }
-    var foregroundFaded: Color { get }
+public protocol ThemeStyle: DynamicProperty, Identifiable, Hashable, Equatable {
+    var primary: Color { get }
+    var secondary: Color { get }
+    var selection: Color { get }
+    var header: Color { get }
+    var link: Color { get }
     var background: Color { get }
-    var accent: Color { get }
+    var secondaryBackground: Color { get }
+    
+    var description: [String : String] { get }
 }
 
 extension ThemeStyle where Self == Theme {
-    public static var plain: Self { .plain }
-    public static var light: Self { .light }
-    public static var dark: Self { .dark }
-    public static var blackWhite: Self { .blackWhite }
-    public static var futureLand: Self { .futureLand }
-    public static var oneDark: Self { .oneDark }
-    public static var neon: Self { .neon }
-    public static var pastel: Self { .pastel }
+    public static var system: Self { .system }
 }

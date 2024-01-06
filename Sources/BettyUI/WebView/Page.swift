@@ -35,7 +35,7 @@ public struct Page: WebPage {
         self.substitutions = substitutions
     }
     
-    public func render<S: ThemeStyle>(_ theme: S = Theme.light) -> String {
+    public func render<S: ThemeStyle>(_ theme: S = Theme.system) -> String {
         do {
             let render = try MacroProcessor.renderedText(withTemplate: template.html, substitutions: substitutions, theme: theme)
             return render

@@ -17,7 +17,7 @@ extension View {
 
 extension EnvironmentValues {
     public struct StyleKey: EnvironmentKey {
-        public static var defaultValue: any ThemeStyle = Theme.plain
+        public static var defaultValue: any ThemeStyle = Theme.system
     }
     
     public var themeStyle: any ThemeStyle {

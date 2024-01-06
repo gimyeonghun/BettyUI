@@ -13,10 +13,9 @@ enum MacroProcessorError: Error {
 
 public class MacroProcessor<S: ThemeStyle> {
     let template: String
-    let substitutions: [String: String]
+    var substitutions: [String: String]
     let macroStart: String
     let macroEnd: String
-    let theme: S
     lazy var renderedText: String = processMacros()
 
     /// Parses a template string and replaces macros with specified values.
@@ -43,9 +42,11 @@ public class MacroProcessor<S: ThemeStyle> {
         }
         self.template = template
         self.substitutions = substitutions
+        for (key, value) in theme.description {
+            self.substitutions[key] = value
+        }
         self.macroStart = macroStart
         self.macroEnd = macroEnd
-        self.theme = theme
     }
 
 }

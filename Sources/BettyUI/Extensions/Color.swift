@@ -110,3 +110,13 @@ extension Color: RawRepresentable {
     }
 }
 
+extension Color {
+    public var css: String {
+        let r = self.resolve(in: .init()).red
+        let g = self.resolve(in: .init()).green
+        let b = self.resolve(in: .init()).blue
+        
+        return "rgb(\(r), \(g), \(b))"
+    }
+}
+

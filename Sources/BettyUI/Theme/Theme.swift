@@ -8,86 +8,57 @@
 import SwiftUI
 
 public struct Theme: ThemeStyle {
-    public var foreground: Color
+    public var primary: Color
     
-    public var foregroundLight: Color
+    public var secondary: Color
     
-    public var foregroundFaded: Color
+    public var selection: Color
+    
+    public var header: Color
+    
+    public var link: Color
     
     public var background: Color
     
-    public var accent: Color
+    public var secondaryBackground: Color
     
-    public init(foreground: Color,
-                foregroundLight: Color? = nil,
-                foregroundFaded: Color? = nil,
+    public var description: [String : String] {
+        var d = [String : String]()
+        d["primary-colour"] = self.primary.css
+        d["secondary-colour"] = self.secondary.css
+        d["selection-colour"] = self.selection.css
+        d["header-colour"] = self.header.css
+        d["link-colour"] = self.link.css
+        d["background-colour"] = self.background.css
+        d["secondary-background-colour"] = self.secondaryBackground.css
+        
+        return d
+    }
+    
+    // MARK: Identifiable
+    
+    public var id: UUID { self.uuid }
+    
+    private let uuid: UUID
+        
+    public init(primary: Color,
+                secondary: Color,
+                selection: Color,
+                header: Color,
+                link: Color,
                 background: Color,
-                accent: Color) {
-        self.foreground = foreground
-        self.foregroundLight = foregroundLight == nil ? foreground.opacity(0.7) : foregroundLight!
-        self.foregroundFaded = foregroundFaded == nil ? foreground.opacity(0.25) : foregroundFaded!
+                secondaryBackground: Color) {
+        self.uuid = UUID()
+        self.primary = primary
+        self.secondary = secondary
+        self.selection = selection
+        self.header = header
+        self.link = link
         self.background = background
-        self.accent = accent
+        self.secondaryBackground = secondaryBackground
     }
     
-    public static var plain: Theme {
-        Theme(foreground: .primary, foregroundLight: .primary.opacity(0.5), foregroundFaded: .secondary, background: .white, accent: .primary)
-    }
-    
-    public static var light: Theme {
-        Theme(foreground: Color(red: 0.267, green: 0.267, blue: 0.267),
-            foregroundLight: Color(red: 0.467, green: 0.467, blue: 0.467),
-            foregroundFaded: Color(red: 0.772, green: 0.772, blue: 0.772),
-            background: Color(red: 0.957, green: 0.961, blue: 0.961),
-            accent: Color(red: 0.553, green: 0.863, blue: 0.765))
-    }
-    
-    public static var dark: Theme {
-        Theme(foreground: Color.white,
-            foregroundLight: Color(red: 0.467, green: 0.467, blue: 0.467),
-            foregroundFaded: Color(red: 0.467, green: 0.467, blue: 0.467),
-            background: Color(red: 0.133, green: 0.133, blue: 0.137),
-            accent: Color(red: 0.957, green: 0.722, blue: 0.361)
-        )
-    }
-    
-    public static var blackWhite: Theme {
-        Theme(foreground: .white, background: .black, accent: .white)
-    }
-    
-    public static var futureLand: Theme {
-        Theme(foreground: Color(hex: "#A5A5A5"),
-                   background: Color(hex: "#000000"),
-                   accent: Color(hex: "#9A98FF"))
-    }
-    
-    public static var oneDark: Theme {
-        Theme(foreground: Color(hex: "#A5A5A5"),
-                   background: Color(hex: "#000000"),
-                   accent: Color(hex: "#9A98FF"))
-    }
-    
-    public static var neon: Theme {
-        Theme(foreground: Color(hex: "#E797CE"),
-                   background: Color(hex: "#1E142D"),
-                   accent: Color(hex: "#EB5267"))
-    }
-    
-    public static var pastel: Theme {
-        Theme(foreground: Color(hex: "#524135"),
-                   background: Color(hex: "#E5DFDA"),
-                   accent: Color(hex: "#9E8C96"))
-    }
-    
-    private func foregroundLight(from colour: Color) -> Color {
-        return opacity(colour, 0.7)
-    }
-    
-    private func foregroundFaded(from colour: Color) -> Color {
-        return opacity(colour, 0.25)
-    }
-    
-    private func opacity(_ colour: Color, _ value: Double) -> Color {
-        colour.opacity(value)
+    public static var system: Theme {
+        Theme.init(primary: .primary, secondary: .secondary, selection: .accentColor, header: .primary, link: .indigo, background: .white, secondaryBackground: .gray.opacity(0.6))
     }
 }
