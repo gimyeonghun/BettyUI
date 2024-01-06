@@ -49,7 +49,7 @@ struct SampleView: View {
             .foregroundStyle(style.foreground)
     }
 }
-``
+```
 
 ### WebView
 
