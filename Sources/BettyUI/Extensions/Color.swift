@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension Color {
+public extension Color {
     init(hex string: String) {
         var string: String = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if string.hasPrefix("#") {
@@ -110,13 +110,16 @@ extension Color: RawRepresentable {
     }
 }
 
-extension Color {
-    public var css: String {
-        let r = self.resolve(in: .init()).red
-        let g = self.resolve(in: .init()).green
-        let b = self.resolve(in: .init()).blue
-        
-        return "rgb(\(r), \(g), \(b))"
+extension UXColor {
+    var hex: String {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0, rgb: Int
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        if a == 1 { // no alpha value set, we are returning the short version
+            rgb = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+            return String(format: "#%06x", rgb)
+        } else {
+            rgb = (Int)(r*255)<<24 | (Int)(g*255)<<16 | (Int)(b*255)<<8 | (Int)(a*255)<<0
+            return String(format: "#%08x", rgb)
+        }
     }
 }
-

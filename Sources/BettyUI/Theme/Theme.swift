@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+#if os(macOS)
+import AppKit
+#else
+import UIKit
+#endif
 
 public struct Theme: ThemeStyle {
     public var primary: Color
@@ -22,15 +27,24 @@ public struct Theme: ThemeStyle {
     
     public var secondaryBackground: Color
     
+    
+    private var _primary: String
+    private var _secondary: String
+    private var _selection: String
+    private var _header: String
+    private var _link: String
+    private var _background: String
+    private var _secondaryBackground: String
+    
     public var description: [String : String] {
         var d = [String : String]()
-        d["primary-colour"] = self.primary.css
-        d["secondary-colour"] = self.secondary.css
-        d["selection-colour"] = self.selection.css
-        d["header-colour"] = self.header.css
-        d["link-colour"] = self.link.css
-        d["background-colour"] = self.background.css
-        d["secondary-background-colour"] = self.secondaryBackground.css
+        d["primary-colour"] = _primary
+        d["secondary-colour"] = _secondary
+        d["selection-colour"] = _selection
+        d["header-colour"] = _header
+        d["link-colour"] = _link
+        d["background-colour"] = _background
+        d["secondary-background-colour"] = _secondaryBackground
         
         return d
     }
@@ -41,24 +55,37 @@ public struct Theme: ThemeStyle {
     
     private let uuid: UUID
         
-    public init(primary: Color,
-                secondary: Color,
-                selection: Color,
-                header: Color,
-                link: Color,
-                background: Color,
-                secondaryBackground: Color) {
+    public init(primary: String,
+                secondary: String,
+                selection: String,
+                header: String,
+                link: String,
+                background: String,
+                secondaryBackground: String) {
         self.uuid = UUID()
-        self.primary = primary
-        self.secondary = secondary
-        self.selection = selection
-        self.header = header
-        self.link = link
-        self.background = background
-        self.secondaryBackground = secondaryBackground
+        self.primary = Color(hex: primary)
+        self.secondary = Color(hex: secondary)
+        self.selection = Color(hex: selection)
+        self.header = Color(hex: header)
+        self.link = Color(hex: link)
+        self.background = Color(hex: background)
+        self.secondaryBackground = Color(hex: secondaryBackground)
+        
+        self._primary = primary
+        self._secondary = secondary
+        self._selection = selection
+        self._header = header
+        self._link = link
+        self._background = background
+        self._secondaryBackground = secondaryBackground
     }
     
     public static var system: Theme {
-        Theme.init(primary: .primary, secondary: .secondary, selection: .accentColor, header: .primary, link: .indigo, background: .white, secondaryBackground: .gray.opacity(0.6))
+        #if os(macOS)
+        let selection = UXColor.controlAccentColor
+        #else
+        let selection = UXColor.tintColor
+        #endif
+        return Theme.init(primary: "#1b1b1b", secondary: "#dcdcdc", selection: selection.hex, header: "#1b1b1b", link: "#416ed2", background: "#f7f7f7", secondaryBackground: "#282828")
     }
 }
