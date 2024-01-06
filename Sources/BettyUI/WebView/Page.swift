@@ -9,7 +9,7 @@ import Foundation
 
 public protocol WebPage {
     var template: Template { get }
-    func render<S: ThemeStyle>(_ theme: S) -> String
+    func render() -> String
 }
 
 public struct Template {
@@ -35,9 +35,9 @@ public struct Page: WebPage {
         self.substitutions = substitutions
     }
     
-    public func render<S: ThemeStyle>(_ theme: S = Theme.system) -> String {
+    public func render() -> String {
         do {
-            let render = try MacroProcessor.renderedText(withTemplate: template.html, substitutions: substitutions, theme: theme)
+            let render = try MacroProcessor.renderedText(withTemplate: template.html, substitutions: substitutions)
             return render
         } catch {
             return ""

@@ -15,11 +15,7 @@ Extend `Theme` by doing the following:
 ```swift
 extension Theme {
     public static var exampleTheme: Theme {
-        Theme(foreground: Color(red: 0.267, green: 0.267, blue: 0.267),
-            foregroundLight: Color(red: 0.467, green: 0.467, blue: 0.467),
-            foregroundFaded: Color(red: 0.772, green: 0.772, blue: 0.772),
-            background: Color(red: 0.957, green: 0.961, blue: 0.961),
-            accent: Color(red: 0.553, green: 0.863, blue: 0.765))
+        Theme.init(primary: .primary, secondary: .secondary, selection: .accentColor, header: .primary, link: .indigo, background: .white, secondaryBackground: .gray.opacity(0.6))
     }
 }
 
@@ -56,6 +52,12 @@ struct SampleView: View {
 WebView is the front-facing view of a web template engine. It's only argument is any type that must conform to `WebPage` (original naming, I know).
 
 Protocol `WebPage` requires one function, `render()`, which will generate the html string. BettyUI provides `Page`, a type that provides some sensible defaults.
+
+`Page` takes 2 arguments, `name` and `substitutions`, which refer to the base html file and the substitutions required.
+
+`WebView` takes 3 arguments, a type conforming to the `WebPage` protocol, a style sheet file and a bundleID. The latter is useful if you wish to open any links in any other browser than the default one. 
+
+If a style sheet is applied, then the base html file in `Page` must have a `[[style]]` substitution. `WebView` will attempt to replace it with the contents provided in the `styleSheet` argument. 
 
 ```swift
 let helloPage = Page(name: "hello")

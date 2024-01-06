@@ -13,10 +13,12 @@ public struct WebView<T: WebPage>: NSViewRepresentable {
     @Environment(\.themeStyle) private var theme
     
     public let page: T
+    public let styleSheet: String
     public let defaultBundleID: String
     
-    public init(page: T, bundle: String = "") {
+    public init(page: T, styleSheet: String, bundle: String = "") {
         self.page = page
+        self.styleSheet = styleSheet
         self.defaultBundleID = bundle
     }
     
@@ -25,16 +27,27 @@ public struct WebView<T: WebPage>: NSViewRepresentable {
         let webView = WKWebView(frame: NSRect.zero, configuration: configuration)
         let userContentController = WKUserContentController()
         configuration.userContentController = userContentController
+        webView.loadHTMLString(configureView(), baseURL: nil)
         return webView
     }
     
     public func updateNSView(_ nsView: WKWebView, context: Context) {
         nsView.navigationDelegate = context.coordinator
-        nsView.loadHTMLString(page.render(theme), baseURL: nil)
+        nsView.loadHTMLString(configureView(), baseURL: nil)
     }
     
     public func makeCoordinator() -> Coordinator {
         return Coordinator(self)
+    }
+    
+    private func configureView() -> String {
+        let render = page.render()
+        let d = try? MacroProcessor.renderedText(withTemplate: styleSheet, substitutions: theme.description)
+        guard let d,
+              let finalRender = try? MacroProcessor.renderedText(withTemplate: render, substitutions: ["style" : d]) else {
+            return render
+        }
+        return finalRender
     }
     
     public class Coordinator: NSObject, WKNavigationDelegate {

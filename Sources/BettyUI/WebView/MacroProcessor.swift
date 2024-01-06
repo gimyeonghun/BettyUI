@@ -11,7 +11,7 @@ enum MacroProcessorError: Error {
     case emptyMacroDelimiter
 }
 
-public class MacroProcessor<S: ThemeStyle> {
+public class MacroProcessor {
     let template: String
     var substitutions: [String: String]
     let macroStart: String
@@ -31,20 +31,17 @@ public class MacroProcessor<S: ThemeStyle> {
     ///
     /// - Throws: An error of type `MacroProcessorError`.
 
-    public static func renderedText(withTemplate template: String, substitutions: [String: String], macroStart: String = "[[", macroEnd: String = "]]", theme: S) throws -> String {
-        let processor = try MacroProcessor(template: template, substitutions: substitutions, macroStart: macroStart, macroEnd: macroEnd, theme: theme)
+    public static func renderedText(withTemplate template: String, substitutions: [String: String], macroStart: String = "[[", macroEnd: String = "]]") throws -> String {
+        let processor = try MacroProcessor(template: template, substitutions: substitutions, macroStart: macroStart, macroEnd: macroEnd)
         return processor.renderedText
     }
 
-    public init(template: String, substitutions: [String: String], macroStart: String = "[[", macroEnd: String = "]]", theme: S) throws {
+    public init(template: String, substitutions: [String: String], macroStart: String = "[[", macroEnd: String = "]]") throws {
         if macroStart.isEmpty || macroEnd.isEmpty {
             throw MacroProcessorError.emptyMacroDelimiter
         }
         self.template = template
         self.substitutions = substitutions
-        for (key, value) in theme.description {
-            self.substitutions[key] = value
-        }
         self.macroStart = macroStart
         self.macroEnd = macroEnd
     }
