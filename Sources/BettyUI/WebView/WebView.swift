@@ -69,6 +69,71 @@ public struct WebView<T: WebPage>: NSViewRepresentable {
         }
     }
 }
+#else
+public struct WebView<T: WebPage>: UIViewRepresentable {
+    @Environment(\.themeStyle) private var theme
+    
+    public let page: T
+    public let styleSheet: String
+    public let defaultBundleID: String
+    
+    public init(page: T, styleSheet: String, bundle: String = "") {
+        self.page = page
+        self.styleSheet = styleSheet
+        self.defaultBundleID = bundle
+    }
+    
+    public func makeUIView(context: Context) -> WKWebView {
+        let configuration = WKWebViewConfiguration()
+        let webView = WKWebView(frame: CGRect.zero, configuration: configuration)
+        let userContentController = WKUserContentController()
+        configuration.userContentController = userContentController
+        webView.loadHTMLString(configureView(), baseURL: nil)
+        return webView
+    }
+    
+    public func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.navigationDelegate = context.coordinator
+        uiView.loadHTMLString(configureView(), baseURL: nil)
+    }
+    
+    public func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
+    
+    private func configureView() -> String {
+        let render = page.render()
+        let d = try? MacroProcessor.renderedText(withTemplate: styleSheet, substitutions: theme.description)
+        guard let d,
+              let finalRender = try? MacroProcessor.renderedText(withTemplate: render, substitutions: ["style" : d]) else {
+            return render
+        }
+        return finalRender
+    }
+    
+    public class Coordinator: NSObject, WKNavigationDelegate {
+        public var parent: WebView
+        
+        public init(_ parent: WebView) {
+            self.parent = parent
+        }
+        
+        public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            if navigationAction.navigationType == .linkActivated {
+                if let url = navigationAction.request.url {
+                    openURL(url)
+                }
+                decisionHandler(.cancel)
+                return
+            }
+            decisionHandler(.allow)
+        }
+        
+        func openURL(_ url: URL) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+}
 #endif
 
 //import SwiftUI

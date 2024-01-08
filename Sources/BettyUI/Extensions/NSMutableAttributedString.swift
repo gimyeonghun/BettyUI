@@ -6,7 +6,11 @@
 //
 
 import Foundation
+#if os(macOS)
 import AppKit
+#else
+import UIKit
+#endif
 
 extension NSMutableAttributedString {
     func addAttribute(_ name: NSAttributedString.Key, value: Any) {

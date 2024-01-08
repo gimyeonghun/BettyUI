@@ -18,8 +18,7 @@ extension UXFont {
         return font
         #else
         guard let newFontDescriptor = fontDescriptor.withSymbolicTraits(existingTraits) else { return self }
-        return HiggsFont(descriptor: newFontDescriptor, size: newPointSize ?? pointSize)
+        return UXFont(descriptor: newFontDescriptor, size: newPointSize ?? pointSize)
         #endif
-
     }
 }
